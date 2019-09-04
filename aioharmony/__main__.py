@@ -49,7 +49,8 @@ async def just_listen(client, _):
     print("Starting to listen on HUB {} with firmware version {}".format(
         client.name,
         client.fw_version))
-
+    while True:
+        await asyncio.sleep(60)
 
 # Functions for use on command line
 async def show_config(client, _):
