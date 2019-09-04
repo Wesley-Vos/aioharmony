@@ -343,8 +343,9 @@ class HubConnector:
                               response.data)
 
                 if response.type == aiohttp.WSMsgType.CLOSED:
-                    _LOGGER.debug("%s: Web socket closed",
-                                  self._ip_address)
+                    close_code = 'N/A' if response.data is None else aiohttp.WSCloseCode(response.data).name
+                    _LOGGER.debug("%s: Web socket closed with code %s",
+                                  self._ip_address, close_code)
                     # Issue reconnect event if enabled
                     have_connection = False
                     break
