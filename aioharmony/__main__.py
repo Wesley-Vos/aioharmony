@@ -211,7 +211,7 @@ async def sync(client, _):
         print("Sync failed")
 
 
-async def run():
+async def run(argV=None):
     """Main method for the script."""
     global hub_client
 
@@ -324,7 +324,7 @@ async def run():
         '--channel', help='Channel to switch to.')
     change_channel_parser.set_defaults(func=change_channel)
 
-    args = parser.parse_args()
+    args = parser.parse_args(argV)
 
     logging.basicConfig(
         level=loglevels[args.loglevel],
@@ -377,10 +377,10 @@ async def run():
             hub_client = None
 
 
-def main() -> None:
+def main(argV=None) -> None:
     loop = asyncio.new_event_loop()
     try:
-        loop.run_until_complete(run())
+        loop.run_until_complete(run(argV))
         while asyncio.all_tasks(loop):
             loop.run_until_complete(asyncio.gather(*asyncio.all_tasks(loop)))
         loop.close()
